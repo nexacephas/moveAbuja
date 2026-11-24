@@ -13,6 +13,14 @@
   --surface: #ffffff;
   --soft-surface: #f7f9f7;
   --shadow: 0 8px 26px rgb(21 48 31 / 7%);
+  --motion-card-duration: 350ms;
+  --motion-hover-duration: 220ms;
+  --motion-press-duration: 140ms;
+  --motion-swap-duration: 280ms;
+  --motion-easing: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --motion-max-tilt: 6deg;
+  --motion-card-stagger: 60ms;
+  --motion-stagger-cap: 400ms;
 }
 
 * {
@@ -194,7 +202,7 @@ button {
   font-size: 22px;
   font-weight: 800;
   transform-style: preserve-3d;
-  transition: transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 280ms ease;
+  transition: transform var(--motion-hover-duration) var(--motion-easing);
 }
 
 .brand-name,
@@ -380,6 +388,16 @@ a:focus-visible {
   cursor: pointer;
 }
 
+.swap-icon {
+  display: inline-block;
+  transform-style: preserve-3d;
+  transition: transform var(--motion-swap-duration) var(--motion-easing);
+}
+
+.swap-button.is-flipped .swap-icon {
+  transform: perspective(360px) rotateY(180deg);
+}
+
 .primary-button,
 .secondary-button {
   width: 100%;
@@ -389,10 +407,7 @@ a:focus-visible {
   font-weight: 750;
   cursor: pointer;
   transform-style: preserve-3d;
-  transition:
-    transform 200ms ease,
-    box-shadow 200ms ease,
-    background-color 200ms ease;
+  transition: transform var(--motion-press-duration) var(--motion-easing);
 }
 
 .primary-button {
@@ -557,16 +572,18 @@ h2 {
 .route-card,
 .place-card {
   transform-style: preserve-3d;
-  animation: card-arrive-3d 480ms cubic-bezier(0.2, 0.8, 0.2, 1);
-  transition:
-    transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow 280ms ease;
+  animation: card-enter-3d var(--motion-card-duration) var(--motion-easing) backwards;
+  animation-delay: min(
+    calc(var(--motion-index, 0) * var(--motion-card-stagger)),
+    var(--motion-stagger-cap)
+  );
+  transition: transform var(--motion-hover-duration) var(--motion-easing);
 }
 
 .mode-pill,
 .place-category {
   transform-style: preserve-3d;
-  transition: transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform var(--motion-hover-duration) var(--motion-easing);
 }
 
 .place-card-heading {
@@ -1002,8 +1019,6 @@ h2 {
   font-size: 12px;
   font-weight: 750;
   cursor: pointer;
-  transform-style: preserve-3d;
-  transition: transform 200ms ease, box-shadow 200ms ease;
 }
 
 .map-fit-button span {
@@ -1055,8 +1070,6 @@ h2 {
   background: var(--marker-color, #0b7a3e);
   box-shadow: 0 3px 10px rgb(0 0 0 / 35%);
   transform: rotate(-45deg);
-  transform-style: preserve-3d;
-  animation: marker-arrive-3d 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .moveabuja-marker__body > span {
@@ -1199,6 +1212,7 @@ h2 {
   .map-frame {
     height: 360px;
   }
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -1304,10 +1318,10 @@ h2 {
   }
 }
 
-@keyframes card-arrive-3d {
+@keyframes card-enter-3d {
   from {
     opacity: 0;
-    transform: perspective(900px) rotateX(-5deg) translateY(14px) scale(0.985);
+    transform: perspective(900px) rotateX(-10deg) translate3d(0, 16px, 0);
   }
 
   to {
@@ -1316,82 +1330,124 @@ h2 {
   }
 }
 
-@keyframes marker-arrive-3d {
-  0% {
+@keyframes card-fade-in {
+  from {
     opacity: 0;
-    transform: perspective(320px) translate3d(0, -12px, 22px) rotateX(24deg)
-      rotate(-45deg) scale(0.72);
   }
 
-  68% {
+  to {
     opacity: 1;
-    transform: perspective(320px) translate3d(0, 3px, 5px) rotateX(-5deg)
-      rotate(-45deg) scale(1.08);
-  }
-
-  100% {
-    opacity: 1;
-    transform: rotate(-45deg) scale(1);
   }
 }
 
 @media (hover: hover) and (pointer: fine) {
   .brand:hover .brand-mark {
-    box-shadow: 0 9px 18px rgb(11 122 62 / 28%);
-    transform: perspective(500px) rotateY(16deg) rotateX(-5deg) translateY(-2px);
+    transform: perspective(500px) rotateY(4deg) rotateX(-2deg);
   }
 
   .route-card:hover,
   .place-card:hover {
-    box-shadow: 0 18px 34px rgb(21 48 31 / 15%), 0 5px 12px rgb(21 48 31 / 8%);
-    transform: perspective(1000px) rotateX(1deg) rotateY(-1.2deg) translateY(-4px)
-      translateZ(4px);
+    transform: perspective(900px)
+      rotateX(var(--motion-max-tilt))
+      rotateY(var(--motion-max-tilt))
+      scale(1.01);
   }
 
   .route-card:hover .mode-pill,
   .place-card:hover .place-category {
     transform: translateZ(10px);
   }
-
-  .primary-button:hover:not(:disabled) {
-    box-shadow: 0 8px 18px rgb(11 122 62 / 24%);
-    transform: perspective(500px) rotateX(1deg) translateY(-2px);
-  }
-
-  .map-fit-button:hover {
-    box-shadow: 0 7px 16px rgb(20 37 25 / 22%);
-    transform: perspective(500px) rotateX(3deg) translateY(-2px);
-  }
 }
 
-.primary-button:active:not(:disabled),
-.map-fit-button:active {
-  transform: perspective(500px) rotateX(-3deg) scale(0.985);
+button:not(:disabled):not(.map-fit-button) {
+  position: relative;
+  isolation: isolate;
+  transform-style: preserve-3d;
+  transition: transform var(--motion-press-duration) var(--motion-easing);
 }
 
-@media (prefers-reduced-motion: reduce) {
+button:not(:disabled):not(.map-fit-button)::after {
+  position: absolute;
+  z-index: -1;
+  inset: 2px 2px -3px;
+  border-radius: inherit;
+  box-shadow: 0 6px 12px rgb(21 48 31 / 22%);
+  content: "";
+  opacity: 0.22;
+  pointer-events: none;
+  transition: opacity var(--motion-press-duration) ease;
+}
+
+button:not(:disabled):not(.map-fit-button):active {
+  transform: translate3d(0, 2px, 0);
+}
+
+button:not(:disabled):not(.map-fit-button):active::after {
+  opacity: 0.1;
+}
+
+@media (prefers-reduced-motion: reduce), (pointer: coarse), (hover: none) {
+  .route-card,
+  .place-card {
+    animation-name: card-fade-in;
+  }
+
+  .route-card:hover,
+  .place-card:hover,
+  .brand:hover .brand-mark,
+  .route-card:hover .mode-pill,
+  .place-card:hover .place-category,
+  .swap-button.is-flipped .swap-icon {
+    transform: none;
+  }
+
   .brand-mark,
   .route-card,
   .place-card,
-  .mode-pill,
-  .place-category,
-  .moveabuja-marker__body,
-  .primary-button,
-  .map-fit-button {
-    animation: none !important;
-    transition: none !important;
-  }
-
-  .brand:hover .brand-mark,
-  .route-card:hover,
-  .place-card:hover,
   .route-card:hover .mode-pill,
   .place-card:hover .place-category,
-  .primary-button:hover:not(:disabled),
-  .primary-button:active:not(:disabled),
-  .map-fit-button:hover,
-  .map-fit-button:active {
-    box-shadow: none;
+  .swap-icon,
+  button:not(:disabled):not(.map-fit-button) {
+    transition: none;
+  }
+
+  button:not(:disabled):not(.map-fit-button):active {
     transform: none;
   }
+
+  button:not(:disabled):not(.map-fit-button)::after {
+    transition: none;
+  }
+}
+
+:root.motion-limited .route-card,
+:root.motion-limited .place-card {
+  animation-name: card-fade-in;
+}
+
+:root.motion-limited .route-card:hover,
+:root.motion-limited .place-card:hover,
+:root.motion-limited .brand:hover .brand-mark,
+:root.motion-limited .route-card:hover .mode-pill,
+:root.motion-limited .place-card:hover .place-category,
+:root.motion-limited .swap-button.is-flipped .swap-icon {
+  transform: none;
+}
+
+:root.motion-limited .brand-mark,
+:root.motion-limited .route-card,
+:root.motion-limited .place-card,
+:root.motion-limited .route-card:hover .mode-pill,
+:root.motion-limited .place-card:hover .place-category,
+:root.motion-limited .swap-icon,
+:root.motion-limited button:not(:disabled):not(.map-fit-button) {
+  transition: none;
+}
+
+:root.motion-limited button:not(:disabled):not(.map-fit-button):active {
+  transform: none;
+}
+
+:root.motion-limited button:not(:disabled):not(.map-fit-button)::after {
+  transition: none;
 }

@@ -16,6 +16,7 @@ export default function SearchForm({
 }) {
   const [from, setFrom] = useState(createFieldValue);
   const [to, setTo] = useState(createFieldValue);
+  const [isSwapFlipped, setIsSwapFlipped] = useState(false);
   const canSearch = Boolean(
     from.selection &&
       to.selection &&
@@ -43,6 +44,11 @@ export default function SearchForm({
     onSelectionChange('to', from.selection);
   }
 
+  function handleSwap() {
+    swapFields();
+    setIsSwapFlipped((flipped) => !flipped);
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
     if (canSearch) onFindRoutes({ from: from.selection, to: to.selection });
@@ -63,13 +69,13 @@ export default function SearchForm({
           />
         </div>
         <button
-          className="swap-button"
+          className={`swap-button${isSwapFlipped ? ' is-flipped' : ''}`}
           type="button"
-          onClick={swapFields}
+          onClick={handleSwap}
           aria-label="Swap From and To"
           title="Swap From and To"
         >
-          <span aria-hidden="true">⇅</span>
+          <span className="swap-icon" aria-hidden="true">⇅</span>
         </button>
         <div className="field">
           <SearchInput

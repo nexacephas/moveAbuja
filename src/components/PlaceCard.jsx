@@ -55,6 +55,7 @@ export default function PlaceCard({
   selectedBranchId,
   onBranchChange,
   onViewMap,
+  motionIndex = 0,
 }) {
   const branches = Array.isArray(place.branches) ? place.branches : [];
   const linkedStops = Array.isArray(nearestStops) ? nearestStops : [];
@@ -91,7 +92,11 @@ export default function PlaceCard({
   const branchSelectId = `branch-select-${place.id}`;
 
   return (
-    <article className="place-card" aria-labelledby={placeHeadingId}>
+    <article
+      className="place-card"
+      aria-labelledby={placeHeadingId}
+      style={{ '--motion-index': motionIndex }}
+    >
       <div className="place-card-heading">
         <div>
           <span className="place-category">{place.category || 'Place'}</span>

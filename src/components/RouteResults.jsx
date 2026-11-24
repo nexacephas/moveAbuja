@@ -23,8 +23,13 @@ export default function RouteResults({
       ) : routes.length > 0 ? (
         <>
           <div className="route-list">
-            {routes.map((route) => (
-              <RouteCard key={`${route.id}-${route.from}-${route.to}`} route={route} stopsById={stopsById} />
+            {routes.map((route, index) => (
+              <RouteCard
+                key={`${route.id}-${route.from}-${route.to}`}
+                route={route}
+                stopsById={stopsById}
+                motionIndex={index}
+              />
             ))}
           </div>
           {lastMileNotes.length > 0 && (

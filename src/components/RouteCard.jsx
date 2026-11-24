@@ -9,7 +9,7 @@ const modes = {
   keke: { label: 'Keke', icon: '🛺' },
 };
 
-export default function RouteCard({ route, stopsById }) {
+export default function RouteCard({ route, stopsById, motionIndex = 0 }) {
   const from = stopsById.get(route.from);
   const to = stopsById.get(route.to);
   const mode = modes[route.mode] ?? { label: 'Public transport', icon: '🚐' };
@@ -19,7 +19,7 @@ export default function RouteCard({ route, stopsById }) {
     pageLoadTime - updatedAt.getTime() > 30 * 24 * 60 * 60 * 1000;
 
   return (
-    <article className="route-card">
+    <article className="route-card" style={{ '--motion-index': motionIndex }}>
       <div className="route-card-top">
         <span className="mode-pill"><span aria-hidden="true">{mode.icon}</span> {mode.label}</span>
         {isOutdated && <span className="outdated-label">May be outdated</span>}

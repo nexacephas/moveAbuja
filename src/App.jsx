@@ -92,6 +92,38 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const root = document.documentElement;
+    const motionPreferences = [
+      window.matchMedia('(prefers-reduced-motion: reduce)'),
+      window.matchMedia('(pointer: coarse)'),
+      window.matchMedia('(hover: none)'),
+    ];
+    const connection = navigator.connection;
+
+    function updateMotionPreference() {
+      root.classList.toggle(
+        'motion-limited',
+        motionPreferences.some((preference) => preference.matches) ||
+          connection?.saveData === true,
+      );
+    }
+
+    updateMotionPreference();
+    motionPreferences.forEach((preference) =>
+      preference.addEventListener('change', updateMotionPreference),
+    );
+    connection?.addEventListener?.('change', updateMotionPreference);
+
+    return () => {
+      motionPreferences.forEach((preference) =>
+        preference.removeEventListener('change', updateMotionPreference),
+      );
+      connection?.removeEventListener?.('change', updateMotionPreference);
+      root.classList.remove('motion-limited');
+    };
+  }, []);
+
   const stops = directoryData.stops;
   const routes = directoryData.routes;
   const places = directoryData.places;
@@ -308,10 +340,11 @@ export default function App() {
                   lastMileNotes={displayedRoutes.length ? lastMileNotes : []}
                 />
               )}
-              {displayedPlaces.map((place) => (
+              {displayedPlaces.map((place, index) => (
                 <PlaceCard
                   key={place.id}
                   place={place}
+                  motionIndex={displayedRoutes.length + index}
                   selectedBranchId={
                     place.id === fromPlace?.id
                       ? branchSelections.from
@@ -352,9 +385,11 @@ export default function App() {
           </>
         )}
       </main>
-      <footer className="app-footer">
-        Fares are estimates and change with fuel prices. Always confirm with the driver.
-      </footer>
+      {!dataLoading && (
+        <footer className="app-footer">
+          Fares are estimates and change with fuel prices. Always confirm with the driver.
+        </footer>
+      )}
     </div>
   );
 }
