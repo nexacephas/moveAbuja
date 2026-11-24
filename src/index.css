@@ -63,6 +63,109 @@ button {
   line-height: 1.5;
 }
 
+.data-error h2 {
+  margin-bottom: 6px;
+  font-size: 18px;
+}
+
+.data-error p {
+  margin-bottom: 0;
+}
+
+.data-error .primary-button {
+  max-width: 180px;
+}
+
+.fatal-error,
+.map-error {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.fatal-error {
+  width: min(100% - 32px, 520px);
+  margin: auto;
+  padding: 24px;
+  text-align: center;
+}
+
+.fatal-error h1 {
+  font-size: 26px;
+}
+
+.fatal-error p,
+.map-error p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.fatal-error .primary-button {
+  max-width: 180px;
+}
+
+.map-error {
+  display: grid;
+  min-height: 160px;
+  align-content: center;
+  justify-items: center;
+  padding: 18px;
+  text-align: center;
+}
+
+.map-error p {
+  margin: 6px 0 0;
+}
+
+.not-found-content {
+  display: grid;
+  width: min(100% - 32px, 520px);
+  margin: auto;
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.not-found-content .eyebrow {
+  margin-bottom: 7px;
+}
+
+.not-found-content h1 {
+  font-size: 30px;
+}
+
+.not-found-content > p:not(.eyebrow) {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.not-found-link {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  padding: 0 18px;
+  border-radius: 11px;
+  background: var(--green);
+  color: #fff;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.not-found-link:hover {
+  background: var(--green-dark);
+}
+
+.not-found-link:focus-visible {
+  outline: 3px solid rgb(11 122 62 / 35%);
+  outline-offset: 3px;
+}
+
 .app-header {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
@@ -911,6 +1014,10 @@ h2 {
     border-color: #435449;
   }
 
+  .eyebrow {
+    color: #8fdbab;
+  }
+
   .field input::placeholder {
     color: var(--muted);
   }
@@ -924,6 +1031,12 @@ h2 {
     border-color: #82652c;
     background: #342b17;
     color: #f1d78d;
+  }
+
+  .data-error {
+    border-color: #99584f;
+    background: #3a201c;
+    color: #ffe7e3;
   }
 
   .mode-pill {

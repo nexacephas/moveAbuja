@@ -58,7 +58,15 @@ export default function PlaceCard({
 }) {
   const branches = Array.isArray(place.branches) ? place.branches : [];
   const linkedStops = Array.isArray(nearestStops) ? nearestStops : [];
-  const [internalBranchId, setInternalBranchId] = useState(() => branches[0]?.id ?? '');
+  const firstBranchId = branches[0]?.id ?? '';
+  const [internalBranchSelection, setInternalBranchSelection] = useState(() => ({
+    placeId: place.id,
+    branchId: firstBranchId,
+  }));
+  const internalBranchId =
+    internalBranchSelection.placeId === place.id
+      ? internalBranchSelection.branchId
+      : firstBranchId;
   const [now, setNow] = useState(() => new Date());
   const branchId = selectedBranchId ?? internalBranchId;
   const branch = branches.find((item) => item?.id === branchId) ?? branches[0] ?? null;
@@ -69,10 +77,6 @@ export default function PlaceCard({
     Number.isFinite(branch?.lat) && Number.isFinite(branch?.lng);
   const phone =
     typeof branch?.phone === 'string' ? branch.phone.trim() : '';
-
-  useEffect(() => {
-    setInternalBranchId(branches[0]?.id ?? '');
-  }, [place.id]);
 
   useEffect(() => {
     const interval = window.setInterval(() => setNow(new Date()), 60_000);
@@ -110,7 +114,7 @@ export default function PlaceCard({
             value={branch?.id ?? ''}
             onChange={(event) => {
               const nextBranchId = event.target.value;
-              setInternalBranchId(nextBranchId);
+              setInternalBranchSelection({ placeId: place.id, branchId: nextBranchId });
               onBranchChange?.(place.id, nextBranchId);
             }}
           >

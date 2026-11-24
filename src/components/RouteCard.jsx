@@ -1,6 +1,8 @@
 import { formatFareRange, formatUpdatedAt } from '../lib/formatters.js';
 import RecordTrust from './RecordTrust.jsx';
 
+const pageLoadTime = Date.now();
+
 const modes = {
   bus: { label: 'Bus', icon: '🚌' },
   'shared-taxi': { label: 'Shared taxi', icon: '🚕' },
@@ -14,7 +16,7 @@ export default function RouteCard({ route, stopsById }) {
   const updatedAt = new Date(`${route.lastUpdated}T00:00:00`);
   const isOutdated =
     !Number.isNaN(updatedAt.getTime()) &&
-    Date.now() - updatedAt.getTime() > 30 * 24 * 60 * 60 * 1000;
+    pageLoadTime - updatedAt.getTime() > 30 * 24 * 60 * 60 * 1000;
 
   return (
     <article className="route-card">

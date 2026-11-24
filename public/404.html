@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0B7A3E" />
+    <title>Page not found — MoveAbuja</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        font-family: system-ui, sans-serif;
+        color: #17231c;
+        background: #f5f7f5;
+      }
+      * { box-sizing: border-box; }
+      body {
+        display: grid;
+        min-height: 100vh;
+        margin: 0;
+        padding: 24px;
+        place-items: center;
+        background: #f5f7f5;
+      }
+      main {
+        width: min(100%, 520px);
+        padding: 28px;
+        border: 1px solid #dce5de;
+        border-radius: 18px;
+        background: #fff;
+        text-align: center;
+      }
+      h1 { margin: 0 0 10px; font-size: 30px; }
+      p { color: #435449; line-height: 1.5; }
+      a {
+        display: inline-flex;
+        min-height: 48px;
+        align-items: center;
+        justify-content: center;
+        margin-top: 8px;
+        padding: 0 18px;
+        border-radius: 11px;
+        background: #0b7a3e;
+        color: #fff;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      a:focus-visible { outline: 3px solid #075d2e; outline-offset: 3px; }
+      @media (prefers-color-scheme: dark) {
+        :root { color: #edf4ef; background: #111a14; }
+        body { background: #111a14; }
+        main { border-color: #334239; background: #19241d; }
+        p { color: #c3cec6; }
+        a:focus-visible { outline-color: #8fdbab; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Page not found</h1>
+      <p>We couldn't find that MoveAbuja page. Return home to search routes and places.</p>
+      <a href="/">Back to MoveAbuja</a>
+    </main>
+  </body>
+</html>

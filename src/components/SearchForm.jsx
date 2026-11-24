@@ -26,7 +26,7 @@ export default function SearchForm({
 
   function updateQuery(field, query) {
     const setValue = field === 'from' ? setFrom : setTo;
-    setValue((current) => ({ query, selection: null }));
+    setValue({ query, selection: null });
     onSelectionChange(field, null);
   }
 

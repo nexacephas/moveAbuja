@@ -1,7 +1,7 @@
 export default function Header() {
   return (
     <header className="app-header">
-      <a className="brand" href="/" aria-label="MoveAbuja home">
+      <a className="brand" href="/">
         <span className="brand-mark" aria-hidden="true">M</span>
         <span>
           <span className="brand-name">MoveAbuja</span>

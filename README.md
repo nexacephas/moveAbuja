@@ -13,6 +13,7 @@ Open the local URL printed by Vite. To create and serve the PWA production build
 
 ```bash
 npm test
+npm run lint
 npm run build
 npm run preview
 ```
@@ -32,4 +33,6 @@ The unified search supports stop names and landmarks, plus place names, aliases,
 ## Deploy to Vercel
 
 Import the project into Vercel or run `vercel` from the project directory. Vercel detects Vite automatically. Use `npm run build` as the build command and `dist` as the output directory. No environment variables or backend services are required.
+
+`vercel.json` configures security headers and cache rules. The static `404.html` is included, so no SPA rewrite is needed. The Open Graph and Twitter share image uses `/share-image.png`; after choosing a production domain, update those image URLs to absolute URLs for social crawlers.
 "# MoveAbuja" 

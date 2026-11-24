@@ -20,7 +20,8 @@ export default function SearchInput({
   const [activeIndex, setActiveIndex] = useState(-1);
   const [isOpen, setIsOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  const blurTimeout = useRef(null);
+  const blurTimeoutRef = useRef(null);
+  const hasSelectedQuery = selection?.name === query;
   const inputId = `${field}-search`;
   const listId = `${field}-suggestions`;
   const options = useMemo(
@@ -36,13 +37,7 @@ export default function SearchInput({
     : null;
 
   useEffect(() => {
-    if (selection && selection.name === query && !isFocused) {
-      setSuggestions({ stops: [], places: [] });
-      setActiveIndex(-1);
-      setIsOpen(false);
-      return undefined;
-    }
-    if (selection && selection.name === query) return undefined;
+    if (hasSelectedQuery) return undefined;
 
     const timeout = window.setTimeout(() => {
       setSuggestions(searchSuggestions(searchIndex, query));
@@ -51,7 +46,7 @@ export default function SearchInput({
     }, 150);
 
     return () => window.clearTimeout(timeout);
-  }, [query, searchIndex, selection, isFocused]);
+  }, [query, searchIndex, hasSelectedQuery, isFocused]);
 
   function chooseSuggestion(suggestion) {
     onSelect({
@@ -101,7 +96,7 @@ export default function SearchInput({
           setActiveIndex(-1);
         }}
         onFocus={() => {
-          window.clearTimeout(blurTimeout.current);
+          window.clearTimeout(blurTimeoutRef.current);
           setIsFocused(true);
           const suggestionQuery = selection?.name === query ? '' : query;
           setSuggestions(searchSuggestions(searchIndex, suggestionQuery));
@@ -109,7 +104,7 @@ export default function SearchInput({
           setActiveIndex(-1);
         }}
         onBlur={() => {
-          blurTimeout.current = window.setTimeout(() => {
+          blurTimeoutRef.current = window.setTimeout(() => {
             setIsFocused(false);
             setIsOpen(false);
             setActiveIndex(-1);
@@ -122,7 +117,7 @@ export default function SearchInput({
       {selection?.type === 'stop' && (
         <RecordTrust record={selectedRecord} className="selection-trust" />
       )}
-      {isOpen && options.length > 0 && (
+      {isOpen && options.length > 0 && (!hasSelectedQuery || isFocused) && (
         <div className="suggestion-list" id={listId} role="listbox" aria-label={`${label} suggestions`}>
           {suggestionGroups.map((group) => {
             const groupItems = suggestions[group.key];

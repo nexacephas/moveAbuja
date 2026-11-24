@@ -6,6 +6,8 @@ import SearchForm from './components/SearchForm.jsx';
 import RouteResults from './components/RouteResults.jsx';
 import PlaceCard from './components/PlaceCard.jsx';
 import SampleDataBanner from './components/SampleDataBanner.jsx';
+import ErrorBoundary from './components/ErrorBoundary.jsx';
+import NotFound from './components/NotFound.jsx';
 import { findRoutesBetweenStops, resolvePlace } from './lib/resolvePlace.js';
 import { createSearchIndex } from './lib/search.js';
 
@@ -20,19 +22,24 @@ async function fetchLocalJson(url, label, signal) {
 }
 
 export default function App() {
+  const currentPath = typeof window === 'undefined' ? '/' : window.location.pathname;
+  const isNotFound = currentPath !== '/' && currentPath !== '/index.html';
   const [fromSelection, setFromSelection] = useState(null);
   const [toSelection, setToSelection] = useState(null);
   const [branchSelections, setBranchSelections] = useState({ from: '', to: '' });
   const [search, setSearch] = useState(null);
   const [mapFocusPoint, setMapFocusPoint] = useState(null);
   const [directoryData, setDirectoryData] = useState({ stops: [], routes: [], places: [] });
-  const [dataError, setDataError] = useState('');
+  const [dataError, setDataError] = useState(false);
   const [dataLoading, setDataLoading] = useState(true);
+  const [dataLoadAttempt, setDataLoadAttempt] = useState(0);
   const [isOffline, setIsOffline] = useState(
     () => typeof navigator !== 'undefined' && !navigator.onLine,
   );
 
   useEffect(() => {
+    if (isNotFound) return undefined;
+
     const controller = new AbortController();
 
     async function loadDirectory() {
@@ -58,7 +65,8 @@ export default function App() {
         });
       } catch (error) {
         if (error?.name !== 'AbortError') {
-          setDataError(error instanceof Error ? error.message : String(error));
+          console.error('Unable to load MoveAbuja route and place data.', error);
+          setDataError(true);
         }
       } finally {
         if (!controller.signal.aborted) {
@@ -69,7 +77,7 @@ export default function App() {
 
     loadDirectory();
     return () => controller.abort();
-  }, []);
+  }, [dataLoadAttempt, isNotFound]);
 
   useEffect(() => {
     function updateNetworkStatus() {
@@ -254,9 +262,17 @@ export default function App() {
     setMapFocusPoint(null);
   }
 
+  function retryDataLoading() {
+    setDataError(false);
+    setDataLoading(true);
+    setDataLoadAttempt((attempt) => attempt + 1);
+  }
+
+  if (isNotFound) return <NotFound />;
+
   return (
     <div className="app-shell">
-      {isOffline && <div className="offline-indicator" role="status">You're offline</div>}
+      {isOffline && <div className="offline-indicator" role="status">You&apos;re offline</div>}
       <Header />
       <main className="main-content">
         <section className="intro-section">
@@ -264,62 +280,77 @@ export default function App() {
           <h1>Where are you headed?</h1>
           <p className="intro-copy">Search transport stops or look up a place in Abuja.</p>
         </section>
-        <SearchForm
-          searchIndex={searchIndex}
-          onSelectionChange={updateSelection}
-          onFindRoutes={findSelectedRoutes}
-        />
-        {dataLoading && (
+        {dataLoading ? (
           <p className="loading-message" role="status">Loading local routes and places…</p>
+        ) : dataError ? (
+          <section className="data-error" role="alert">
+            <h2>We couldn&apos;t load route and place data.</h2>
+            <p>Check your connection, then try again.</p>
+            <button className="primary-button" type="button" onClick={retryDataLoading}>
+              Try again
+            </button>
+          </section>
+        ) : (
+          <>
+            <SearchForm
+              searchIndex={searchIndex}
+              onSelectionChange={updateSelection}
+              onFindRoutes={findSelectedRoutes}
+            />
+            <div className="content-stack">
+              {hasSampleData && <SampleDataBanner />}
+              {(search || !displayedPlaces.length) && (
+                <RouteResults
+                  routes={displayedRoutes}
+                  stopsById={stopsById}
+                  searched={Boolean(search)}
+                  emptyMessage={isPlaceSearch ? 'No direct route found yet' : undefined}
+                  lastMileNotes={displayedRoutes.length ? lastMileNotes : []}
+                />
+              )}
+              {displayedPlaces.map((place) => (
+                <PlaceCard
+                  key={place.id}
+                  place={place}
+                  selectedBranchId={
+                    place.id === fromPlace?.id
+                      ? branchSelections.from
+                      : branchSelections.to
+                  }
+                  nearestStops={
+                    place.id === fromPlace?.id
+                      ? fromResolvedPlace?.nearestStops ?? []
+                      : toResolvedPlace?.nearestStops ?? []
+                  }
+                  onBranchChange={updatePlaceBranch}
+                  onViewMap={(branch) => setMapFocusPoint({
+                    id: branch.id,
+                    lat: branch.lat,
+                    lng: branch.lng,
+                  })}
+                />
+              ))}
+              <ErrorBoundary
+                fallback={
+                  <div className="map-error" role="alert">
+                    <strong>Map unavailable.</strong>
+                    <p>You can still search routes and view place details.</p>
+                  </div>
+                }
+              >
+                <Suspense fallback={<div className="map-loading" role="status">Loading map…</div>}>
+                  <RouteMap
+                    fromStop={mapFromStop}
+                    toStop={mapToStop}
+                    focusPoint={mapFocusPoint}
+                    placeLocations={placeLocations}
+                    showRouteLine={!search || displayedRoutes.length > 0}
+                  />
+                </Suspense>
+              </ErrorBoundary>
+            </div>
+          </>
         )}
-        {dataError && (
-          <p className="data-error" role="alert">
-            Local route and place data could not be loaded: {dataError}
-          </p>
-        )}
-        <div className="content-stack">
-          {hasSampleData && <SampleDataBanner />}
-          {(search || !displayedPlaces.length) && (
-            <RouteResults
-              routes={displayedRoutes}
-              stopsById={stopsById}
-              searched={Boolean(search)}
-              emptyMessage={isPlaceSearch ? 'No direct route found yet' : undefined}
-              lastMileNotes={displayedRoutes.length ? lastMileNotes : []}
-            />
-          )}
-          {displayedPlaces.map((place) => (
-            <PlaceCard
-              key={place.id}
-              place={place}
-              selectedBranchId={
-                place.id === fromPlace?.id
-                  ? branchSelections.from
-                  : branchSelections.to
-              }
-              nearestStops={
-                place.id === fromPlace?.id
-                  ? fromResolvedPlace?.nearestStops ?? []
-                  : toResolvedPlace?.nearestStops ?? []
-              }
-              onBranchChange={updatePlaceBranch}
-              onViewMap={(branch) => setMapFocusPoint({
-                id: branch.id,
-                lat: branch.lat,
-                lng: branch.lng,
-              })}
-            />
-          ))}
-          <Suspense fallback={<div className="map-loading" role="status">Loading map…</div>}>
-            <RouteMap
-              fromStop={mapFromStop}
-              toStop={mapToStop}
-              focusPoint={mapFocusPoint}
-              placeLocations={placeLocations}
-              showRouteLine={!search || displayedRoutes.length > 0}
-            />
-          </Suspense>
-        </div>
       </main>
       <footer className="app-footer">
         Fares are estimates and change with fuel prices. Always confirm with the driver.
