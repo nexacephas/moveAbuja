@@ -904,11 +904,43 @@ h2 {
   font-weight: 500;
 }
 
+.map-section-heading {
+  align-items: flex-start;
+}
+
+.map-source-badge,
+.map-area-badge {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--soft-surface);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.map-source-dot,
+.map-area-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 3px rgb(11 122 62 / 12%);
+}
+
 .map-frame {
-  height: 260px;
+  position: relative;
+  height: 300px;
   overflow: hidden;
-  border-radius: 13px;
+  border: 1px solid var(--border);
+  border-radius: 17px;
   background: #e8eee9;
+  box-shadow: inset 0 1px 5px rgb(21 48 31 / 10%);
 }
 
 .map-frame .leaflet-container {
@@ -917,27 +949,175 @@ h2 {
   background: #e8eee9;
 }
 
-.leaflet-div-icon.place-marker-icon {
+.map-area-badge {
+  position: absolute;
+  z-index: 1000;
+  top: 12px;
+  right: 12px;
+  border-color: rgb(255 255 255 / 78%);
+  background: rgb(255 255 255 / 94%);
+  color: #17231c;
+  box-shadow: 0 3px 12px rgb(20 37 25 / 16%);
+}
+
+.map-fit-button {
+  position: absolute;
+  z-index: 1000;
+  top: 54px;
+  right: 12px;
+  display: inline-flex;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 3px 12px rgb(20 37 25 / 16%);
+  font-size: 12px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.map-fit-button span {
+  color: var(--green);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.leaflet-control-zoom {
+  overflow: hidden;
+  border: 1px solid var(--border) !important;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgb(20 37 25 / 16%) !important;
+}
+
+.leaflet-control-zoom a {
+  width: 44px !important;
+  height: 44px !important;
+  border: 0 !important;
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  line-height: 44px !important;
+}
+
+.leaflet-control-zoom a + a {
+  border-top: 1px solid var(--border) !important;
+}
+
+.leaflet-control-attribution {
+  border-top-left-radius: 8px;
+  font-size: 10px !important;
+}
+
+.leaflet-div-icon.moveabuja-marker {
   display: grid;
   place-items: center;
   border: 0;
   background: transparent;
 }
 
-.place-marker-dot {
-  display: block;
-  width: 20px;
-  height: 20px;
+.moveabuja-marker__body {
+  position: relative;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
   border: 3px solid #fff;
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 1px 5px rgb(0 0 0 / 45%);
+  border-radius: 50% 50% 50% 8px;
+  background: var(--marker-color, #0b7a3e);
+  box-shadow: 0 3px 10px rgb(0 0 0 / 35%);
+  transform: rotate(-45deg);
 }
 
-.leaflet-control-zoom a {
-  width: 44px !important;
-  height: 44px !important;
-  line-height: 44px !important;
+.moveabuja-marker__body > span {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 850;
+  transform: rotate(45deg);
+}
+
+.moveabuja-marker--start {
+  --marker-color: #087a3e;
+}
+
+.moveabuja-marker--destination {
+  --marker-color: #bd4d21;
+}
+
+.moveabuja-marker--place {
+  --marker-color: #5142a0;
+}
+
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-top: 12px;
+}
+
+.map-legend-item {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.map-legend-marker {
+  display: inline-grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  border: 2px solid #fff;
+  border-radius: 50% 50% 50% 5px;
+  background: var(--legend-color);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 25%);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 850;
+  transform: rotate(-45deg);
+}
+
+.map-legend-marker--start {
+  --legend-color: #087a3e;
+}
+
+.map-legend-marker--destination {
+  --legend-color: #bd4d21;
+}
+
+.map-legend-marker--place {
+  --legend-color: #5142a0;
+}
+
+.map-legend-marker > * {
+  transform: rotate(45deg);
+}
+
+.map-legend-walk {
+  width: 22px;
+  border-top: 3px dashed var(--green);
+}
+
+.map-empty-hint {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 11px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.map-empty-hint span {
+  color: var(--green);
+  font-size: 17px;
 }
 
 .map-disclaimer {
@@ -991,7 +1171,7 @@ h2 {
   }
 
   .map-frame {
-    height: 310px;
+    height: 360px;
   }
 }
 
