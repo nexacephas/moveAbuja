@@ -1,0 +1,242 @@
+{
+  "places": [
+    {
+      "id": "sample-civic-services",
+      "name": "Sample Civic Services Office",
+      "aliases": ["FMT", "fictional ministry template"],
+      "category": "government",
+      "website": "https://example.com/sample-civic-services",
+      "status": "sample",
+      "source": "placeholder",
+      "sourceUrl": "",
+      "statusDate": "2026-11-24",
+      "branches": [
+        {
+          "id": "civic-garki",
+          "label": "Garki sample branch",
+          "address": "Placeholder address near Garki, Abuja",
+          "lat": 9.039,
+          "lng": 7.493,
+          "nearestStopIds": ["garki"],
+          "walkNote": "Placeholder walk note; confirm the route locally.",
+          "phone": "",
+          "hours": {
+            "mon": "09:00-17:00",
+            "tue": "09:00-17:00",
+            "wed": "09:00-17:00",
+            "thu": "09:00-17:00",
+            "fri": "09:00-17:00",
+            "sat": null,
+            "sun": null
+          },
+          "lastVerified": "2026-11-24"
+        },
+        {
+          "id": "civic-cbd",
+          "label": "Central sample branch",
+          "address": "Placeholder address near Central Business District, Abuja",
+          "lat": 9.058,
+          "lng": 7.496,
+          "nearestStopIds": ["central-business-district"],
+          "walkNote": "Placeholder walk note; confirm the route locally.",
+          "phone": "",
+          "hours": {
+            "mon": "09:00-17:00",
+            "tue": "09:00-17:00",
+            "wed": "09:00-17:00",
+            "thu": "09:00-17:00",
+            "fri": "09:00-17:00",
+            "sat": null,
+            "sun": null
+          },
+          "lastVerified": "2026-11-24"
+        }
+      ]
+    },
+    {
+      "id": "green-hills-test-bank",
+      "name": "Green Hills Test Bank",
+      "aliases": ["GHTB", "sample bank"],
+      "category": "bank",
+      "website": "https://example.com/green-hills-test-bank",
+      "status": "sample",
+      "source": "placeholder",
+      "sourceUrl": "",
+      "statusDate": "2026-11-24",
+      "branches": [
+        {
+          "id": "bank-wuse",
+          "label": "Wuse sample branch",
+          "address": "Placeholder address near Wuse, Abuja",
+          "lat": 9.073,
+          "lng": 7.484,
+          "nearestStopIds": ["wuse"],
+          "walkNote": "Placeholder walk note; confirm the route locally.",
+          "phone": "",
+          "hours": {
+            "mon": "09:00-16:00",
+            "tue": "09:00-16:00",
+            "wed": "09:00-16:00",
+            "thu": "09:00-16:00",
+            "fri": "09:00-16:00",
+            "sat": "09:00-12:00",
+            "sun": null
+          },
+          "lastVerified": "2026-11-24"
+        }
+      ]
+    },
+    {
+      "id": "placeholder-community-hospital",
+      "name": "Placeholder Community Hospital",
+      "aliases": ["PCH", "sample clinic"],
+      "category": "hospital",
+      "website": "https://example.com/placeholder-community-hospital",
+      "status": "sample",
+      "source": "placeholder",
+      "sourceUrl": "",
+      "statusDate": "2026-11-24",
+      "branches": [
+        {
+          "id": "hospital-kubwa",
+          "label": "Kubwa sample branch",
+          "address": "Placeholder address near Kubwa, Abuja",
+          "lat": 9.159,
+          "lng": 7.322,
+          "nearestStopIds": ["kubwa"],
+          "walkNote": "Placeholder walk note; confirm the route locally.",
+          "phone": "",
+          "hours": {
+            "mon": "00:00-23:59",
+            "tue": "00:00-23:59",
+            "wed": "00:00-23:59",
+            "thu": "00:00-23:59",
+            "fri": "00:00-23:59",
+            "sat": "00:00-23:59",
+            "sun": "00:00-23:59"
+          },
+          "lastVerified": "2026-11-24"
+        },
+        {
+          "id": "hospital-nyanya",
+          "label": "Nyanya sample branch",
+          "address": "Placeholder address near Nyanya, Abuja",
+          "lat": 8.998,
+          "lng": 7.574,
+          "nearestStopIds": ["nyanya"],
+          "walkNote": "Placeholder walk note; confirm the route locally.",
+          "phone": "",
+          "hours": {
+            "mon": "00:00-23:59",
+            "tue": "00:00-23:59",
+            "wed": "00:00-23:59",
+            "thu": "00:00-23:59",
+            "fri": "00:00-23:59",
+            "sat": "00:00-23:59",
+            "sun": "00:00-23:59"
+          },
+          "lastVerified": "2026-11-24"
+        }
+      ]
+    },
+    {
+      "id": "north-star-demo-university",
+      "name": "North Star Demo University",
+      "aliases": ["NSDU", "sample university"],
+      "category": "university",
+      "website": "https://example.com/north-star-demo-university",
+      "status": "sample",
+      "source": "placeholder",
+      "sourceUrl": "",
+      "statusDate": "2026-11-24",
+      "branches": [
+        {
+          "id": "university-city-gate",
+          "label": "City Gate sample campus",
+          "address": "Placeholder address near City Gate, Abuja",
+          "lat": 9.044,
+          "lng": 7.436,
+          "nearestStopIds": ["city-gate"],
+          "walkNote": "Placeholder walk note; confirm the route locally.",
+          "phone": "",
+          "hours": {
+            "mon": "08:00-18:00",
+            "tue": "08:00-18:00",
+            "wed": "08:00-18:00",
+            "thu": "08:00-18:00",
+            "fri": "08:00-18:00",
+            "sat": "09:00-13:00",
+            "sun": null
+          },
+          "lastVerified": "2026-11-24"
+        }
+      ]
+    },
+    {
+      "id": "example-market-cooperative",
+      "name": "Example Market Cooperative",
+      "aliases": ["EMC", "sample market"],
+      "category": "market",
+      "website": "https://example.com/example-market-cooperative",
+      "status": "sample",
+      "source": "placeholder",
+      "sourceUrl": "",
+      "statusDate": "2026-11-24",
+      "branches": [
+        {
+          "id": "market-lugbe",
+          "label": "Lugbe sample market",
+          "address": "Placeholder address near Lugbe, Abuja",
+          "lat": 8.983,
+          "lng": 7.369,
+          "nearestStopIds": ["lugbe"],
+          "walkNote": "Placeholder walk note; confirm the route locally.",
+          "phone": "",
+          "hours": {
+            "mon": "08:00-19:00",
+            "tue": "08:00-19:00",
+            "wed": "08:00-19:00",
+            "thu": "08:00-19:00",
+            "fri": "08:00-19:00",
+            "sat": "08:00-19:00",
+            "sun": "08:00-19:00"
+          },
+          "lastVerified": "2026-11-24"
+        }
+      ]
+    },
+    {
+      "id": "fictional-consular-office",
+      "name": "Fictional Consular Office",
+      "aliases": ["FCO", "sample embassy"],
+      "category": "embassy",
+      "website": "https://example.com/fictional-consular-office",
+      "status": "sample",
+      "source": "placeholder",
+      "sourceUrl": "",
+      "statusDate": "2026-11-24",
+      "branches": [
+        {
+          "id": "consular-cbd",
+          "label": "Central sample office",
+          "address": "Placeholder address near Central Business District, Abuja",
+          "lat": 9.061,
+          "lng": 7.499,
+          "nearestStopIds": ["central-business-district"],
+          "walkNote": "Placeholder walk note; confirm the route locally.",
+          "phone": "",
+          "hours": {
+            "mon": "09:00-15:00",
+            "tue": "09:00-15:00",
+            "wed": "09:00-15:00",
+            "thu": "09:00-15:00",
+            "fri": "09:00-15:00",
+            "sat": null,
+            "sun": null
+          },
+          "lastVerified": "2026-11-24"
+        }
+      ]
+    }
+  ]
+}

@@ -21,11 +21,13 @@ PWA service-worker behavior is enabled in the production preview and deployed bu
 
 ## Route data
 
-All seed routes and directory entries are marked `sample: true`. **All fares, coordinates, organisation names, addresses, website links, and hours in `src/data/routes.json` and `src/data/places.json` are placeholders, not verified field data.** The place links use the reserved `example.com` domain and phone fields are blank. Replace the sample information with data verified in the field before presenting it as factual. Keep route `from` and `to` values matched to stop IDs and place `nearestStopIds` matched to stop IDs. Provide verified update dates, and leave `sample: true` until information has been verified.
+All route, stop, and organisation records currently have `status: "sample"`. **All fares, coordinates, organisation names, addresses, website links, and hours in `src/data/routes.json` and `src/data/places.json` are placeholders, not verified field data.** The place links use the reserved `example.com` domain and phone fields are blank. Replace the sample information with data verified in the field before presenting it as factual. Keep route `from` and `to` values matched to stop IDs and place `nearestStopIds` matched to stop IDs. Record provenance in each record's `status`, `source`, `sourceUrl`, and `statusDate` fields.
 
-The route and place data is loaded locally from JSON; there is no backend. Stop-to-stop route search is available. Place-to-route connections are not included yet.
+The route and place data is loaded locally from JSON; there is no backend. Place searches use the selected branch's nearest stop IDs to find direct routes. Place details and nearest stops remain visible when no direct route is listed.
 
 The unified search supports stop names and landmarks, plus place names, aliases, categories, and branch addresses. Focusing either field shows up to eight grouped stop and place suggestions before typing; typing filters the suggestions after a short debounce. For example, typing `FMT` finds the fictional Sample Civic Services Office.
+
+`npm test` runs the unit tests for Lagos-time opening hours, place resolution, and grouped search.
 
 ## Deploy to Vercel
 

@@ -1,0 +1,86 @@
+{
+  "stops": [
+    { "id": "nyanya", "name": "Nyanya", "lat": 8.995, "lng": 7.571, "landmark": "Sample landmark near Nyanya market", "status": "sample", "source": "placeholder", "sourceUrl": "", "statusDate": "2026-11-24" },
+    { "id": "city-gate", "name": "City Gate", "lat": 9.042, "lng": 7.433, "landmark": "Sample pickup point near City Gate", "status": "sample", "source": "placeholder", "sourceUrl": "", "statusDate": "2026-11-24" },
+    { "id": "kubwa", "name": "Kubwa", "lat": 9.157, "lng": 7.319, "landmark": "Sample stop near Kubwa market", "status": "sample", "source": "placeholder", "sourceUrl": "", "statusDate": "2026-11-24" },
+    { "id": "wuse", "name": "Wuse", "lat": 9.071, "lng": 7.482, "landmark": "Sample stop near Wuse market", "status": "sample", "source": "placeholder", "sourceUrl": "", "statusDate": "2026-11-24" },
+    { "id": "gwarinpa", "name": "Gwarinpa", "lat": 9.108, "lng": 7.409, "landmark": "Sample pickup point in Gwarinpa", "status": "sample", "source": "placeholder", "sourceUrl": "", "statusDate": "2026-11-24" },
+    { "id": "garki", "name": "Garki", "lat": 9.038, "lng": 7.492, "landmark": "Sample stop in Garki", "status": "sample", "source": "placeholder", "sourceUrl": "", "statusDate": "2026-11-24" },
+    { "id": "airport-road", "name": "Airport Road", "lat": 8.995, "lng": 7.356, "landmark": "Sample stop along Airport Road", "status": "sample", "source": "placeholder", "sourceUrl": "", "statusDate": "2026-11-24" },
+    { "id": "central-business-district", "name": "Central Business District", "lat": 9.057, "lng": 7.495, "landmark": "Sample pickup point in the CBD", "status": "sample", "source": "placeholder", "sourceUrl": "", "statusDate": "2026-11-24" },
+    { "id": "lugbe", "name": "Lugbe", "lat": 8.98, "lng": 7.366, "landmark": "Sample stop near Lugbe market", "status": "sample", "source": "placeholder", "sourceUrl": "", "statusDate": "2026-11-24" },
+    { "id": "berger", "name": "Berger", "lat": 9.02, "lng": 7.49, "landmark": "Sample drop-off and pickup area near Berger", "status": "sample", "source": "placeholder", "sourceUrl": "", "statusDate": "2026-11-24" }
+  ],
+  "routes": [
+    {
+      "id": "nyanya-city-gate",
+      "status": "sample",
+      "source": "placeholder",
+      "sourceUrl": "",
+      "statusDate": "2026-11-24",
+      "from": "nyanya",
+      "to": "city-gate",
+      "mode": "bus",
+      "fare": { "min": 300, "max": 500 },
+      "lastUpdated": "2026-11-24",
+      "reports": 0,
+      "notes": "Placeholder corridor and fare for demonstration only."
+    },
+    {
+      "id": "kubwa-wuse",
+      "status": "sample",
+      "source": "placeholder",
+      "sourceUrl": "",
+      "statusDate": "2026-11-24",
+      "from": "kubwa",
+      "to": "wuse",
+      "mode": "shared-taxi",
+      "fare": { "min": 400, "max": 700 },
+      "lastUpdated": "2026-11-24",
+      "reports": 0,
+      "notes": "Placeholder corridor and fare for demonstration only."
+    },
+    {
+      "id": "gwarinpa-garki",
+      "status": "sample",
+      "source": "placeholder",
+      "sourceUrl": "",
+      "statusDate": "2026-11-24",
+      "from": "gwarinpa",
+      "to": "garki",
+      "mode": "bus",
+      "fare": { "min": 500, "max": 800 },
+      "lastUpdated": "2026-11-24",
+      "reports": 0,
+      "notes": "Placeholder corridor and fare for demonstration only."
+    },
+    {
+      "id": "airport-road-central-business-district",
+      "status": "sample",
+      "source": "placeholder",
+      "sourceUrl": "",
+      "statusDate": "2026-11-24",
+      "from": "airport-road",
+      "to": "central-business-district",
+      "mode": "shared-taxi",
+      "fare": { "min": 600, "max": 1000 },
+      "lastUpdated": "2026-11-24",
+      "reports": 0,
+      "notes": "Placeholder corridor and fare for demonstration only."
+    },
+    {
+      "id": "lugbe-berger",
+      "status": "sample",
+      "source": "placeholder",
+      "sourceUrl": "",
+      "statusDate": "2026-11-24",
+      "from": "lugbe",
+      "to": "berger",
+      "mode": "keke",
+      "fare": { "min": 250, "max": 450 },
+      "lastUpdated": "2026-11-24",
+      "reports": 0,
+      "notes": "Placeholder corridor and fare for demonstration only."
+    }
+  ]
+}
